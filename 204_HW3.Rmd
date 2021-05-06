@@ -1,0 +1,25 @@
+---
+title: "204_hw3"
+author: "Nicholas Bissonnette"
+date: "5/6/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(janitor)
+```
+
+First step is to read in the provided data
+```{r}
+gas_data <- read_csv(here("data", "HW3_data.csv")) %>% 
+  clean_names()
+
+# view data
+ggplot(data = gas_data, aes(x = q_low_gallons, y = price_dollars))+
+  geom_point()+
+  theme_bw()
+```
+
