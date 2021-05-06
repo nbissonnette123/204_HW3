@@ -23,3 +23,9 @@ ggplot(data = gas_data, aes(x = q_low_gallons, y = price_dollars))+
   theme_bw()
 ```
 
+## Build linera regression models 
+Here I can run regression modeling using the loaded data.
+```{r}
+lm_dlow <- lm(formula = price_dollars ~ q_low_gallons, data = gas_data)
+```
+
