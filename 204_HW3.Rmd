@@ -27,5 +27,43 @@ ggplot(data = gas_data, aes(x = q_low_gallons, y = price_dollars))+
 Here I can run regression modeling using the loaded data.
 ```{r}
 lm_dlow <- lm(formula = price_dollars ~ q_low_gallons, data = gas_data)
+coefficients(lm_dlow)
+
+#From this linear regression model I found that y intercept is 11.685 and the slope is -6.611437e-05. Which we can now create a function.
+
+dlow_function <- function(x) -6.611437e-05 *x + 1.168548e+01
+```
+I can use the lm() to find the equation for the high demand curve as well.
+```{r}
+lm_dhigh <- lm(formula = price_dollars ~ q_high_gallons, data = gas_data)
+coefficients(lm_dhigh)
+
+# The y-intercept for the high demand curve is 15.803 and the slope is -2.730926e-05. Which we can now make the dhigh function 
+
+dhigh_function <- function(x) -2.730926e-05  *x + 1.580343e+01
+```
+Now these linear models can be graphed together
+
+```{r}
+
+## graphing issue 
+ggplot(data = gas_data, aes(x = q_low_gallons))+
+  stat_function(fun = dhigh_function,
+                color = "red")+
+  stat_function(fun = dlow_function,
+                color = "blue")+
+  
+  annotate("text", x = 40, y = 140, color = "red", label = "high: -2.730926e-05*x + 15.803")+
+  annotate("text", x = 40, y = 130, color = "blue", label = "low: -6.611437e-05 *x + 11.685")+
+  theme_bw()+
+  labs(
+    y = "Marginal Cost of Abatement ($/AF)",
+    x = "Reduction in Water Use (AF)",
+    title = "Marginal Cost Curves"
+  )+
+  geom_hline(aes(yintercept = 0))+
+  geom_vline(aes(xintercept = 0))+
+  theme(plot.title = element_text(hjust = 0.5))+
+  ylim(0, 150)
 ```
 
